@@ -2,9 +2,8 @@
 <html lang="en">
   <%- include('partials/head') %>
   <body>
-
-   <!-- Login Form -->
-  <section class="ezy__signin1 light d-flex align-items-center">
+    <!-- Login Form -->
+    <section class="ezy__signin1 light d-flex align-items-center">
       <div class="container">
         <div class="row py-4 justify-content-center">
           <div class="col-lg-5">
@@ -29,7 +28,6 @@
                   <button id="login-btn" class="btn ezy__signin1-btn-submit w-100">Log In</button>
                   <button type="button" id="reset-password-btn" class="btn btn-link w-100 text-start mt-2">Forgot your password?</button>
                   <div class="px-2"><span>Or</span></div>
-                  </form>
                   <div id="auth-buttons">
                     <button id="google-login-btn" type="button" class="btn btn-danger ezy__signin1-btn w-100 d-flex">
                       <span class="fab fa-google text-white fs-4"></span>
@@ -46,8 +44,9 @@
           </div>
         </div>
       </div>
-  </section>
-  <!-- Firebase (modular only) -->
+    </section>
+
+    <!-- Firebase Modules (ESM only) -->
     <script type="module">
       import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
       import {
@@ -55,12 +54,13 @@
         GoogleAuthProvider,
         signInWithRedirect,
         getRedirectResult,
+        onAuthStateChanged,
         signInWithEmailAndPassword,
         setPersistence,
         sendPasswordResetEmail,
         browserLocalPersistence,
         browserSessionPersistence,
-        onAuthStateChanged
+        signInWithPopup
       } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
       const firebaseConfig = {
@@ -77,30 +77,26 @@
       const provider = new GoogleAuthProvider();
 
       // Google login
-      document.getElementById("google-login-btn").addEventListener("click", () => {
-        signInWithRedirect(auth, provider);
-      });
+document.getElementById("google-login-btn").addEventListener("click", async () => {
+  try {
+    const result = await signInWithPopup(auth, provider);
+    const idToken = await result.user.getIdToken();
+    const res = await fetch("/verify-token", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ idToken }),
+    });
 
-      // Handle redirect result
-      getRedirectResult(auth)
-        .then(async (result) => {
-          if (result?.user) {
-            const idToken = await result.user.getIdToken();
-            const res = await fetch("/verify-token", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ idToken }),
-            });
-            if (res.ok) {
-              window.location.href = "/dashboard";
-            } else {
-              alert("Login failed. Invalid token.");
-            }
-          }
-        })
-        .catch((err) => console.error("Redirect login error:", err));
+    if (res.ok) {
+      window.location.href = "/dashboard";
+    }
+  } catch (error) {
+    console.error("Popup login failed:", error);
+    alert("Google login failed: " + error.message);
+  }
+});
 
-      // Auto redirect to dashboard if already logged in
+      // Already signed-in user
       onAuthStateChanged(auth, async (user) => {
         if (user) {
           const idToken = await user.getIdToken();
@@ -109,6 +105,7 @@
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ idToken }),
           });
+
           if (res.ok) {
             window.location.href = "/dashboard";
           }
@@ -137,14 +134,14 @@
           if (res.ok) {
             window.location.href = "/dashboard";
           } else {
-            alert("Login failed: Token not accepted.");
+            alert("Login failed.");
           }
         } catch (error) {
-          alert("Login failed: " + error.message);
+          alert("Login error: " + error.message);
         }
       });
 
-      // Password reset
+      // Reset password
       document.getElementById("reset-password-btn").addEventListener("click", async () => {
         const email = document.getElementById("email").value.trim();
         if (!email) return alert("Enter your email address first.");
