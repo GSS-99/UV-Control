@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%-  include ('partials/head') %>
+<body>
+   
+  <h1>Welcome, <%= user.name || user.email %></h1>
+
+  <section>
+    <h2>Why Control UV Radiation?</h2>
+    <p>Monitoring UV radiation helps prevent sunburn, premature aging, and skin cancer.</p>
+  </section>
+
+  <section>
+    <h2>7-Day UV Forecast</h2>
+    <p>[Map & forecast data coming soon]</p>
+  </section>
+
+  <section>
+    <h2>Shop UV Protection Products</h2>
+    <p>[Product listing coming soon]</p>
+  </section>
+
+  <section>
+    <h2>Scientific Information</h2>
+    <p>[Educational resources about solar radiation coming soon]</p>
+  </section>
+
+  <button id="logout-btn">Logout</button>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyDw-cQW1UQp9Qom0R4nFnksx66xlghgTy8",
+    authDomain: "uv-control.firebaseapp.com",
+    projectId: "uv-control",
+    storageBucket: "uv-control.appspot.com",
+    messagingSenderId: "1066833623282",
+    appId: "1:1066833623282:web:b65c79cb811a9ace36386b",
+    measurementId: "G-NTKJD6LLN0"
+  };
+
+  // ✅ Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  // ✅ Logout button logic
+  document.getElementById("logout-btn").addEventListener("click", async () => {
+    await signOut(auth); // Firebase client logout
+    window.location.href = "/logout"; // Backend clears cookie and redirects to login
+  });
+</script>
+
+
+</body>
+</html>

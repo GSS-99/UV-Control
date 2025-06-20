@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('partials/head') %>
+  <body>
+
+   <!-- Login Form -->
+  <section class="ezy__signin1 light d-flex align-items-center">
+      <div class="container">
+        <div class="row py-4 justify-content-center">
+          <div class="col-lg-5">
+            <div class="card ezy__signin1-form-card">
+              <div class="card-body p-md-5">
+                <h2 class="ezy__signin1-heading mb-4 mb-md-5">Log In</h2>
+                <form id="login-form" onsubmit="return false;">
+                  <div class="form-group mb-4 mt-2">
+                    <label for="email" class="mb-2">Email Address</label>
+                    <input type="email" id="email" name="email" autocomplete="email" placeholder="Enter Email Address" required />
+                  </div>
+                  <div class="form-group mb-2 mt-2">
+                    <label for="password" class="mb-2">Password</label>
+                    <input type="password" id="password" name="password" autocomplete="current-password" placeholder="Enter Password" required />
+                  </div>
+                  <div class="form-group mb-3">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="remember-me" />
+                      <label class="form-check-label" for="remember-me"> Remember me </label>
+                    </div>
+                  </div>
+                  <button id="login-btn" class="btn ezy__signin1-btn-submit w-100">Log In</button>
+                  <button type="button" id="reset-password-btn" class="btn btn-link w-100 text-start mt-2">Forgot your password?</button>
+                  <div class="px-2"><span>Or</span></div>
+                  </form>
+                  <div id="auth-buttons">
+                    <button id="google-login-btn" type="button" class="btn btn-danger ezy__signin1-btn w-100 d-flex">
+                      <span class="fab fa-google text-white fs-4"></span>
+                      <span class="w-100">Continue with Google</span>
+                    </button>
+                  </div>
+                  <div class="text-center mt-4 mt-md-5">
+                    <p class="mb-0 opacity-50 lh-1">Don't have an account?</p>
+                    <button type="button" id="register-btn" class="btn btn-link py-0 text-dark text-decoration-none">Create account</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  </section>
+  <!-- Firebase (modular only) -->
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+      import {
+        getAuth,
+        GoogleAuthProvider,
+        signInWithRedirect,
+        getRedirectResult,
+        signInWithEmailAndPassword,
+        setPersistence,
+        sendPasswordResetEmail,
+        browserLocalPersistence,
+        browserSessionPersistence,
+        onAuthStateChanged
+      } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyDw-cQW1UQp9Qom0R4nFnksx66xlghgTy8",
+        authDomain: "uv-control.firebaseapp.com",
+        projectId: "uv-control",
+        storageBucket: "uv-control.appspot.com",
+        messagingSenderId: "1066833623282",
+        appId: "1:1066833623282:web:b65c79cb811a9ace36386b"
+      };
+
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth(app);
+      const provider = new GoogleAuthProvider();
+
+      // Google login
+      document.getElementById("google-login-btn").addEventListener("click", () => {
+        signInWithRedirect(auth, provider);
+      });
+
+      // Handle redirect result
+      getRedirectResult(auth)
+        .then(async (result) => {
+          if (result?.user) {
+            const idToken = await result.user.getIdToken();
+            const res = await fetch("/verify-token", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ idToken }),
+            });
+            if (res.ok) {
+              window.location.href = "/dashboard";
+            } else {
+              alert("Login failed. Invalid token.");
+            }
+          }
+        })
+        .catch((err) => console.error("Redirect login error:", err));
+
+      // Auto redirect to dashboard if already logged in
+      onAuthStateChanged(auth, async (user) => {
+        if (user) {
+          const idToken = await user.getIdToken();
+          const res = await fetch("/verify-token", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ idToken }),
+          });
+          if (res.ok) {
+            window.location.href = "/dashboard";
+          }
+        }
+      });
+
+      // Email/password login
+      document.getElementById("login-form").addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const email = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value;
+        const remember = document.getElementById("remember-me").checked;
+        const persistence = remember ? browserLocalPersistence : browserSessionPersistence;
+
+        try {
+          await setPersistence(auth, persistence);
+          const userCredential = await signInWithEmailAndPassword(auth, email, password);
+          const idToken = await userCredential.user.getIdToken();
+
+          const res = await fetch("/verify-token", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ idToken }),
+          });
+
+          if (res.ok) {
+            window.location.href = "/dashboard";
+          } else {
+            alert("Login failed: Token not accepted.");
+          }
+        } catch (error) {
+          alert("Login failed: " + error.message);
+        }
+      });
+
+      // Password reset
+      document.getElementById("reset-password-btn").addEventListener("click", async () => {
+        const email = document.getElementById("email").value.trim();
+        if (!email) return alert("Enter your email address first.");
+
+        try {
+          await sendPasswordResetEmail(auth, email);
+          alert("Check your inbox for the reset email.");
+        } catch (error) {
+          alert("Error: " + error.message);
+        }
+      });
+    </script>
+  </body>
+</html>
