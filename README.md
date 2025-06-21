@@ -1,3 +1,5 @@
+```md
+
 # UV Control ☀️
 
 UV Control is a web application that displays solar UV radiation forecasts, provides skincare tips, and educates users on sun safety and solar radiation.
@@ -16,7 +18,6 @@ UV Control is a web application that displays solar UV radiation forecasts, prov
 - **Auth Methods**: Email/Password, Google Sign-In (popup)
 - **Hosting**: Firebase Hosting / Local Dev
 
-```md
 ## 🤝 Contributing
 
 Pull requests are welcome. For major changes, please open an issue first to discuss what you'd like to change.
