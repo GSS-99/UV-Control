@@ -1,5 +1,3 @@
-```md
-
 # UV Control ☀️
 
 UV Control is a web application that displays solar UV radiation forecasts, provides skincare tips, and educates users on sun safety and solar radiation.
@@ -34,8 +32,8 @@ This project is licensed under the MIT License. See the [LICENSE](./LICENSE) fil
 
 ## 🛠️ Getting Started
 
-1. **Clone** the repository  
-```bash
+1. **Clone** the repository:  
+
 git clone https://github.com/yourusername/uv-control.git
 cd uv-control
 
@@ -48,7 +46,9 @@ cd uv-control
 npm install
 npm run dev
 
-⚠️ Do not commit your `serviceAccountKey.json` or API keys. This project includes a `.gitignore` that protects sensitive files. Always use environment variables or config files not tracked by Git.
+## ⚠️ Remember
+
+Do not commit your `serviceAccountKey.json` or API keys. This project includes a `.gitignore` that protects sensitive files. Always use environment variables or config files not tracked by Git.
 
 ## 🌄 Screenshots
 
