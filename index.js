@@ -5,6 +5,10 @@ import path from "path";
 import cookieParser from "cookie-parser";
 import admin from "firebase-admin";
 import { fileURLToPath } from "url";
+import dotenv from 'dotenv';
+dotenv.config();
+
+const apiKey = process.env.OPENWEATHERMAP_API_KEY;
 
 // Setup for ES Modules
 const __filename = fileURLToPath(import.meta.url);
@@ -79,7 +83,7 @@ app.post("/verify-token", async (req, res) => {
 
 // Protected dashboard
 app.get("/dashboard", verifyToken, (req, res) => {
-  res.render("dashboard", { user: req.user });
+  res.render("dashboard", { user: req.user, openWeatherApiKey: process.env.OPENWEATHERMAP_API_KEY});
 });
 
 // Logout route
