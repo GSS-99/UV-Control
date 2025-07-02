@@ -30,6 +30,4 @@ build/
 # IDE files (optional)
 .idea/
 
-# Environment variables
-.env
 

@@ -5,10 +5,6 @@ import path from "path";
 import cookieParser from "cookie-parser";
 import admin from "firebase-admin";
 import { fileURLToPath } from "url";
-import dotenv from 'dotenv';
-dotenv.config();
-
-const apiKey = process.env.OPENWEATHERMAP_API_KEY;
 
 // Setup for ES Modules
 const __filename = fileURLToPath(import.meta.url);
