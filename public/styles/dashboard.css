@@ -1,5 +1,8 @@
 /* Base layout */
 body.dashboard {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 1rem;
   --bs-body-color: black;
   --bs-body-bg: rgb(255, 255, 255, 0.4);
   background: linear-gradient(-45deg, #9B7EBD, #FEEBF6, #A2AADB, #F49BAB);
@@ -22,12 +25,14 @@ body.dashboard {
 
 /* Header */
 .dashboard-header {
-  background-color: white;
-  margin: 1rem;
-  padding: 2rem 1rem;
   text-align: center;
+  background-color: white;
+  border: none;
+  padding: 1rem;
+  font-weight: bold;
   border-radius: 12px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  transition: background-color 0.3s ease, transform 0.2s ease;
   opacity: 0.7;
 }
 
@@ -55,8 +60,8 @@ body.dashboard {
 
 .dashboard-title {
   margin: 0;
-  font-size: 2rem;
-  font-weight: 600;
+  font-size: 1.5rem;
+  font-weight: bold;
 }
 
 /* Main content */
@@ -141,8 +146,6 @@ body.dashboard {
   text-align: center;
   background-color: white;
   border: none;
-  padding: 0 0;
-  margin: 1rem 20rem;
   font-size: 1rem;
   font-weight: bold;
   border-radius: 12px;
