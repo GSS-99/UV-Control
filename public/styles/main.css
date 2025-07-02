@@ -3,7 +3,7 @@
   /* Bootstrap variables */
   --bs-body-color: black;
   --bs-body-bg: rgb(255, 255, 255, 0.4);
-  background: linear-gradient(-45deg, #FCD8CD, #FEEBF6, #A2AADB, #687FE5);
+  background: linear-gradient(-45deg, #9B7EBD, #FEEBF6, #A2AADB, #F49BAB);
   background-size: 400% 400%;
   animation: gradient 15s ease infinite;
   min-height: 100vh;
