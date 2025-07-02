@@ -1,0 +1,92 @@
+/* Base layout */
+body.dashboard {
+    --bs-body-color: black;
+  --bs-body-bg: rgb(255, 255, 255, 0.4);
+  background: linear-gradient(-45deg, #FCD8CD, #FEEBF6, #A2AADB, #687FE5);
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+  min-height: 100vh;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Header */
+.dashboard-header {
+  background-color: #687FE5;
+  padding: 2rem 1rem;
+  text-align: center;
+  color: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-title {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+/* Main content */
+.dashboard-content {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+.dashboard-section {
+  background-color: white;
+  padding: 1.5rem 2rem;
+  margin-bottom: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease;
+}
+
+.dashboard-section:hover {
+  transform: translateY(-2px);
+}
+
+.section-title {
+  font-size: 1.5rem;
+  color: #687FE5;
+  margin-bottom: 0.75rem;
+}
+
+.section-text {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #555;
+}
+
+/* Footer */
+.dashboard-footer {
+  text-align: center;
+  padding: 2rem 1rem;
+}
+
+/* Logout Button */
+.logout-btn {
+  background-color: #687FE5;
+  color: white;
+  border: none;
+  padding: 0.75rem 2rem;
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.logout-btn:hover {
+  background-color: #9e0021;
+  transform: scale(1.05);
+}
