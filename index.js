@@ -54,13 +54,12 @@ const verifyToken = async (req, res, next) => {
 // Routes
 
 app.get('/info', (req, res) => {
-  res.render('scientific-info');
+  res.render('info');
 });
 
 app.get('/about', (req, res) => {
   res.render('about');
 });
-
 
 // Public login page
 app.get("/", (req, res) => {
@@ -88,7 +87,7 @@ app.post("/verify-token", async (req, res) => {
 
 // Protected dashboard
 app.get("/dashboard", verifyToken, (req, res) => {
-  res.render("dashboard", { user: req.user, openWeatherApiKey: process.env.OPENWEATHERMAP_API_KEY});
+  res.render("dashboard", { user: req.user});
 });
 
 // Logout route

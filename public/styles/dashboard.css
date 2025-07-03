@@ -1,7 +1,7 @@
-/* Base layout */
-body.dashboard {
+/* Main content */
+.dashboard-content {
   max-width: 900px;
-  margin: 2rem auto;
+  margin: 1rem;
   padding: 1rem;
   --bs-body-color: black;
   --bs-body-bg: rgb(255, 255, 255, 0.4);
@@ -28,12 +28,13 @@ body.dashboard {
   text-align: center;
   background-color: white;
   border: none;
-  padding: 1rem;
+  padding: 1rem auto;
+  margin-bottom: 2rem;
   font-weight: bold;
   border-radius: 12px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
   transition: background-color 0.3s ease, transform 0.2s ease;
-  opacity: 0.7;
+  background: rgb(255, 255, 255, 0.6)
 }
 
 @keyframes gradient-move {
@@ -59,16 +60,28 @@ body.dashboard {
 }
 
 .dashboard-title {
+  padding: 1rem;
   margin: 0;
   font-size: 1.5rem;
   font-weight: bold;
 }
 
-/* Main content */
-.dashboard-content {
-  max-width: 900px;
-  margin: 2rem auto;
-  padding: 0 1rem;
+div.scrollmenu {
+  background-color: none;
+  overflow: auto;
+  white-space: nowrap;
+}
+
+div.scrollmenu a {
+  display: inline-block;
+  color: #555;
+  text-align: center;
+  padding: 1rem;
+  text-decoration: none;
+}
+
+div.scrollmenu a:hover {
+  background-color: none;
 }
 
 .dashboard-section {
@@ -78,7 +91,7 @@ body.dashboard {
   border-radius: 12px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
   transition: transform 0.2s ease;
-  opacity: 0.7;
+  background: rgb(255, 255, 255, 0.6)
 }
 
 .dashboard-section:hover {
@@ -131,7 +144,6 @@ body.dashboard {
   font-weight: bold;
   cursor: pointer;
 }
-
 
 /* Map column */
 .map-container {
