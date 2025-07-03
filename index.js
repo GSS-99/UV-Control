@@ -53,6 +53,15 @@ const verifyToken = async (req, res, next) => {
 
 // Routes
 
+app.get('/info', (req, res) => {
+  res.render('scientific-info');
+});
+
+app.get('/about', (req, res) => {
+  res.render('about');
+});
+
+
 // Public login page
 app.get("/", (req, res) => {
   res.render("login");
