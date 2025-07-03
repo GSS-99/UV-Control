@@ -14,17 +14,17 @@
       <script type="module" src="/js/uv-forecast.js"></script>
       <script src="https://kit.fontawesome.com/fc30c7fac3.js" crossorigin="anonymous" defer></script>
       <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"defer></script>
-      <script type="module" src="/index.js"></script>
  </head>
 
   <body class="dashboard-content">
    <header class="dashboard-header">
       <h1 class="dashboard-title gradient-text">Welcome, <%= user.name || user.email %></h1>
       <div class="scrollmenu">
-        <a href="/dashboard">Home</a>
+        <a class="nav-link" href="/dashboard">Home</a>
         <a class="nav-link" href="#shop-section">Shop</a>
-        <a href="/info">UV Facts</a>
-        <a href="/about">About</a>
+        <a class="nav-link" href="/info">UV Facts</a>
+        <a class="nav-link" href="/about">About</a>
+        <button id="logout-btn">Logout</button>
       </div>
     </header>
 
@@ -74,10 +74,6 @@
           <span class="product-price">€29.99</span>
         </div>
       </div>
-    </section>
-
-    <section class="dashboard-logout">
-      <button id="logout-btn" class="btn logout-btn gradient-text">Logout</button>
     </section>
 
     <script type="module">

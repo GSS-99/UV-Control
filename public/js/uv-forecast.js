@@ -116,12 +116,12 @@ document.addEventListener('DOMContentLoaded', () => {
             <h2>Today's UV Forecast</h2>
             <div class="forecast-details">
               <div class="forecast-metric">
-                <span class="label">UV Index</span>
+                <span class="label">UV Index:</span>
                 <span class="value">${uvIndex.toFixed(1)}</span>
                 <span class="badge ${riskLevel.class}">${riskLevel.text}</span>
               </div>
               <div class="forecast-metric">
-                <span class="label">Temperature</span>
+                <span class="label">Temperature:</span>
                 <span class="value">${tempMin.toFixed(1)}°C - ${tempMax.toFixed(1)}°C</span>
               </div>
             </div>
