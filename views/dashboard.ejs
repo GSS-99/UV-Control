@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -14,70 +15,66 @@
       <script src="https://kit.fontawesome.com/fc30c7fac3.js" crossorigin="anonymous" defer></script>
       <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"defer></script>
       <script type="module" src="/index.js"></script>
-  </head>
+ </head>
+
   <body class="dashboard-content">
    <header class="dashboard-header">
       <h1 class="dashboard-title gradient-text">Welcome, <%= user.name || user.email %></h1>
       <div class="scrollmenu">
         <a href="/dashboard">Home</a>
-        <a href="">Shop</a>
+        <a class="nav-link" href="#shop-section">Shop</a>
         <a href="/info">UV Facts</a>
         <a href="/about">About</a>
       </div>
     </header>
 
-     <section class="dashboard-section">
+    <section class="dashboard-section">
       <h2 class="section-title gradient-text">Why Control UV Radiation?</h2>
       <p class="section-text">
         Monitoring UV radiation helps prevent sunburn, premature aging, and skin cancer.
       </p>
-     </section>
+    </section>
 
-     <section class="dashboard-section">
-       <h2 class="section-title gradient-text">7-Day UV Forecast</h2>
-       <section class="uv-forecast">
-         <div class="map-container">
-           <div class="map-header">
-             <button id="manual-location-btn" style="display: none;">Show your location</button>
-           </div>
-           <div class="map-preview" id="map">
-             <!-- JS will insert map here -->
-           </div>
+   <section class="dashboard-section">
+     <h2 class="section-title gradient-text">7-Day UV Forecast</h2>
+      <section class="uv-forecast">
+       <div class="map-container">
+         <div class="map-header">     
+            <button id="manual-location-btn" style="display: none;">Show your location</button>
+          </div>
+         <div class="map-preview" id="map">
+           <!-- JS will insert map here -->
          </div>
-         <div class="forecast-container">
-           <!-- Forecast cards will go here (already structured) -->
-         </div>
-       </section>
-     </section>
+       </div>
+       <div class="forecast-container">
+         <!-- Forecast cards will go here (already structured) -->
+       </div>
+      </section>
+    </section>
 
-     <section class="dashboard-section shop-section">
-       <h2 class="section-title gradient-text">Shop UV Protection Products</h2>
-       <div class="product-grid">
-         <div class="product-card">
-           <img class="product-img" src="/assets/products/solar-cream.png" alt="SPF 50 Sunscreen">
-           <h3 class="product-name">SPF 50+ Sunscreen</h3>
-           <p class="product-desc">Broad-spectrum protection for daily use.</p>
-           <span class="product-price">€12.99</span>
-          </div>
-          <div class="product-card">
-           <img class="product-img" src="/assets/products/hat.png" alt="UV-Protective Hat">
-           <h3 class="product-name">UV-Protective Hat</h3>
-           <p class="product-desc">Blocks up to 98% of UV rays.</p>
-           <span class="product-price">€19.99</span>
-          </div>
-          <div class="product-card">
-            <img class="product-img" src="/assets/products/sunglasses.png" alt="Polarized Sunglasses">
-            <h3 class="product-name">Polarized Sunglasses</h3>
-            <p class="product-desc">UV400 protection with style.</p>
-            <span class="product-price">€29.99</span>
-          </div>
+    <section class="dashboard-section shop-section" id="shop-section">
+     <h2 class="section-title gradient-text">Shop UV Protection Products</h2>
+     <div class="product-grid">
+       <div class="product-card">
+         <img class="product-img" src="/assets/products/solar-cream.png" alt="SPF 50 Sunscreen">
+         <h3 class="product-name">SPF 50+ Sunscreen</h3>
+         <p class="product-desc">Broad-spectrum protection for daily use.</p>
+         <span class="product-price">€12.99</span>
         </div>
-      </section>
-
-      <section class="dashboard-section">
-        <h2 class="section-title gradient-text">Scientific Information</h2>
-        <p class="section-text">[Educational resources about solar radiation coming soon]</p>
-      </section>
+        <div class="product-card">
+          <img class="product-img" src="/assets/products/hat.png" alt="UV-Protective Hat">
+          <h3 class="product-name">UV-Protective Hat</h3>
+          <p class="product-desc">Blocks up to 98% of UV rays.</p>
+          <span class="product-price">€19.99</span>
+        </div>
+        <div class="product-card">
+          <img class="product-img" src="/assets/products/sunglasses.png" alt="Polarized Sunglasses">
+          <h3 class="product-name">Polarized Sunglasses</h3>
+          <p class="product-desc">UV400 protection with style.</p>
+          <span class="product-price">€29.99</span>
+        </div>
+      </div>
+    </section>
 
     <section class="dashboard-logout">
       <button id="logout-btn" class="btn logout-btn gradient-text">Logout</button>
