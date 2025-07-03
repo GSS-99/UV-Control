@@ -21,12 +21,22 @@ document.addEventListener('DOMContentLoaded', () => {
       mapDiv.style.borderRadius = "10px";
       mapContainer.appendChild(mapDiv);
 
-      // Initialize Leaflet map
-      const map = L.map('leaflet-map').setView([latitude, longitude], 11);
+      // Initialize Leaflet map with scroll and drag disabled 
+      const map = L.map('leaflet-map', {
+        center: [latitude, longitude],
+        zoom: 11,
+        scrollWheelZoom: false,
+        dragging: false,
+        doubleClickZoom: false,
+        boxZoom: false,
+        keyboard: false,
+        tap: false,
+        touchZoom: false
+      });
 
       // Add OpenStreetMap tile layer (free, no key needed)
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 18,
+        maxZoom: 20,
         attribution: '© OpenStreetMap contributors'
       }).addTo(map);
 
@@ -111,6 +121,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (uv <= 2) return "Low risk. Enjoy safely.";
     if (uv <= 5) return "Wear sunglasses and SPF 30.";
     if (uv <= 7) return "Avoid noon sun. Use SPF 50.";
-    return "High risk! Seek shade and protect skin.";
+    return "High risk! Seek shade and protect your skin.";
   }
 });
