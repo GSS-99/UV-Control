@@ -137,3 +137,31 @@ dist
 # Vite logs files
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+this is my git ignore # Node dependencies (if you use Node.js)
+node_modules/
+
+# Firebase service account key (keep secret!)
+serviceAccountKey.json
+
+# Firebase emulator & debug files
+firebase-debug.log
+.firebaserc
+.firebase/
+
+# Build output folders
+dist/
+build/
+
+# VSCode settings (optional)
+.vscode/
+
+# macOS system files (optional)
+.DS_Store
+
+# Environment variables files
+.env
+.env.local
+.env.*.local
+
+# IDE files (optional)
+.idea/
