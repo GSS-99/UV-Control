@@ -47,114 +47,115 @@
     </section>
 
     <!-- Firebase Modules (ESM only) -->
-    <script type="module">
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-      import {
-        getAuth,
-        GoogleAuthProvider,
-        signInWithRedirect,
-        getRedirectResult,
-        onAuthStateChanged,
-        signInWithEmailAndPassword,
-        setPersistence,
-        sendPasswordResetEmail,
-        browserLocalPersistence,
-        browserSessionPersistence,
-        signInWithPopup
-      } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import {
+    getAuth,
+    GoogleAuthProvider,
+    signInWithPopup,
+    signInWithEmailAndPassword,
+    setPersistence,
+    sendPasswordResetEmail,
+    browserLocalPersistence,
+    browserSessionPersistence,
+    onAuthStateChanged,
+  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-      const firebaseConfig = {
-        apiKey: "AIzaSyDw-cQW1UQp9Qom0R4nFnksx66xlghgTy8",
-        authDomain: "uv-control.firebaseapp.com",
-        projectId: "uv-control",
-        storageBucket: "uv-control.appspot.com",
-        messagingSenderId: "1066833623282",
-        appId: "1:1066833623282:web:b65c79cb811a9ace36386b"
-      };
+  const firebaseConfig = {
+    apiKey: "AIzaSyDw-cQW1UQp9Qom0R4nFnksx66xlghgTy8",
+    authDomain: "uv-control.firebaseapp.com",
+    projectId: "uv-control",
+    storageBucket: "uv-control.appspot.com",
+    messagingSenderId: "1066833623282",
+    appId: "1:1066833623282:web:b65c79cb811a9ace36386b"
+  };
 
-      const app = initializeApp(firebaseConfig);
-      const auth = getAuth(app);
-      const provider = new GoogleAuthProvider();
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const provider = new GoogleAuthProvider();
 
-      // Google login
-document.getElementById("google-login-btn").addEventListener("click", async () => {
-  try {
-    const result = await signInWithPopup(auth, provider);
-    const idToken = await result.user.getIdToken();
-    const res = await fetch("/verify-token", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ idToken }),
-    });
+  // Google login
+  document.getElementById("google-login-btn")?.addEventListener("click", async () => {
+    try {
+      const result = await signInWithPopup(auth, provider);
+      const idToken = await result.user.getIdToken();
+      const res = await fetch("/verify-token", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ idToken }),
+      });
 
-    if (res.ok) {
-      window.location.href = "/dashboard";
+      if (res.ok) {
+        window.location.href = "/dashboard";
+      } else {
+        alert("Login failed on server side.");
+      }
+    } catch (error) {
+      console.error("Google login failed:", error);
+      alert("Google login error: " + error.message);
     }
-  } catch (error) {
-    console.error("Popup login failed:", error);
-    alert("Google login failed: " + error.message);
-  }
-});
+  });
 
-      // Already signed-in user
-      onAuthStateChanged(auth, async (user) => {
-        if (user) {
-          const idToken = await user.getIdToken();
-          const res = await fetch("/verify-token", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ idToken }),
-          });
-
-          if (res.ok) {
-            window.location.href = "/dashboard";
-          }
-        }
+  // Auth state observer
+  onAuthStateChanged(auth, async (user) => {
+    if (user) {
+      const idToken = await user.getIdToken();
+      const res = await fetch("/verify-token", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ idToken }),
       });
 
-      // Email/password login
-      document.getElementById("login-form").addEventListener("submit", async (e) => {
-        e.preventDefault();
-        const email = document.getElementById("email").value.trim();
-        const password = document.getElementById("password").value;
-        const remember = document.getElementById("remember-me").checked;
-        const persistence = remember ? browserLocalPersistence : browserSessionPersistence;
+      if (res.ok) {
+        window.location.href = "/dashboard";
+      }
+    }
+  });
 
-        try {
-          await setPersistence(auth, persistence);
-          const userCredential = await signInWithEmailAndPassword(auth, email, password);
-          const idToken = await userCredential.user.getIdToken();
+  // Email/Password login
+  document.getElementById("login-form")?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
+    const remember = document.getElementById("remember-me")?.checked;
+    const persistence = remember ? browserLocalPersistence : browserSessionPersistence;
 
-          const res = await fetch("/verify-token", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ idToken }),
-          });
+    try {
+      await setPersistence(auth, persistence);
+      const { user } = await signInWithEmailAndPassword(auth, email, password);
+      const idToken = await user.getIdToken();
 
-          if (res.ok) {
-            window.location.href = "/dashboard";
-          } else {
-            alert("Login failed.");
-          }
-        } catch (error) {
-          alert("Login error: " + error.message);
-        }
+      const res = await fetch("/verify-token", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ idToken }),
       });
 
-      // Reset password
-      document.getElementById("reset-password-btn").addEventListener("click", async () => {
-        const email = document.getElementById("email").value.trim();
-        if (!email) return alert("Enter your email address first.");
+      if (res.ok) {
+        window.location.href = "/dashboard";
+      } else {
+        alert("Server verification failed.");
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+      alert("Login error: " + error.message);
+    }
+  });
 
-        try {
-          await sendPasswordResetEmail(auth, email);
-          alert("Check your inbox for the reset email.");
-        } catch (error) {
-          alert("Error: " + error.message);
-        }
-      });
-    </script>
+  // Reset password
+  document.getElementById("reset-password-btn")?.addEventListener("click", async () => {
+    const email = document.getElementById("email").value.trim();
+    if (!email) return alert("Please enter your email address first.");
 
+    try {
+      await sendPasswordResetEmail(auth, email);
+      alert("Check your inbox for a password reset email.");
+    } catch (error) {
+      console.error("Reset error:", error);
+      alert("Reset error: " + error.message);
+    }
+  });
+</script>
      <%- include('partials/footer') %>
   </body>
 </html>

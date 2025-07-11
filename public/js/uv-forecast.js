@@ -74,24 +74,42 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- Get Location and Cache It ---
   async function getUserLocation() {
-    if (!navigator.geolocation) {
-      alert('Geolocation is not supported by your browser.');
-      return;
-    }
-
-    navigator.geolocation.getCurrentPosition(async (position) => {
-      const { latitude, longitude } = position.coords;
-      localStorage.setItem('userLocation', JSON.stringify({ latitude, longitude }));
-      manualLocationBtn.style.display = 'none';
-      loadMapAndForecast(latitude, longitude);
-    }, (err) => {
-      if (!userManuallyDenied) {
-        console.error('Location error:', err.message);
-        alert('Location access denied. Unable to display personalized UV data.');
-        manualLocationBtn.style.display = 'inline-block';
-      }
-    });
+  if (!navigator.geolocation) {
+    alert('Geolocation is not supported by your browser.');
+    return;
   }
+
+  try {
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        const { latitude, longitude } = position.coords;
+        localStorage.setItem('userLocation', JSON.stringify({ latitude, longitude }));
+        manualLocationBtn.style.display = 'none';
+        loadMapAndForecast(latitude, longitude);
+      },
+      (err) => {
+        console.warn('Geolocation error:', err.message);
+
+        if (err.code === err.PERMISSION_DENIED) {
+          alert('Location access was denied. Please enable it in your browser settings if you want personalized UV data.');
+        } else {
+          alert('Could not get your location. You can try again or enter it manually.');
+        }
+
+        manualLocationBtn.style.display = 'inline-block';
+      },
+      {
+        enableHighAccuracy: true,
+        timeout: 8000,
+        maximumAge: 0
+      }
+    );
+  } catch (error) {
+    console.error('Unexpected location error:', error);
+    alert('An unexpected error occurred while getting your location.');
+    manualLocationBtn.style.display = 'inline-block';
+  }
+}
 
   // --- Load Map and Forecast ---
   async function loadMapAndForecast(latitude, longitude) {
