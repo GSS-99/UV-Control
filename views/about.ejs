@@ -1,1 +1,50 @@
+<!DOCTYPE html>
+    <%- include('partials/head') %>
+    <body>
+        <header class="dashboard-header">
+      <div class="scrollmenu">
+        <a class="nav-link" href="/dashboard">Home</a>
+        <a class="nav-link" href="#shop-section">Shop</a>
+        <a class="nav-link" href="/info">UV Facts</a>
+        <a class="nav-link" href="/about">About</a>
+        <button id="logout-btn">Logout</button>
+      </div>
+    </header>
+    <main class="dashboard-section">
+      <h1 class="section-title">About UV Control</h1>
+      <section class="about-section">
+
+        <h2>👨‍💻 About the Developer</h2>
+        <p>
+          UV Control was built by <strong>Gonzalo Salas</strong>, a full-stack web developer based in Denmark with roots in Spain. With a background in media and a growing specialization in frontend/backend development, Gonzalo is passionate about building meaningful, accessible, and purpose-driven digital tools. This project is a blend of technical learning, public health advocacy, and creative vision.
+        </p>
+
+        <h2>🎯 Purpose of This Project</h2>
+        <p>
+          The app was born from a simple idea: empower people to protect their health while enjoying life under the sun. UV Control provides real-time UV forecasts, product suggestions, and scientific information to raise awareness about the risks of solar radiation.
+        </p>
+
+        <h2>🛠️ Technologies Used</h2>
+        <ul>
+          <li>Node.js & Express (server)</li>
+          <li>Firebase Authentication (login)</li>
+          <li>Leaflet.js + OpenStreetMap (map)</li>
+          <li>Open-Meteo API (UV & weather data)</li>
+          <li>HTML, CSS, EJS templates, JavaScript</li>
+        </ul>
+
+        <h2>🌐 Future Improvements</h2>
+        <ul>
+          <li>Mobile app version (React Native or Swift)</li>
+          <li>Personalized notifications and alerts</li>
+          <li>Product checkout system (cart, filters)</li>
+          <li>Multilingual support (ES, EN, DK)</li>
+        </ul>
+
+      </section>
+    </main>
+
     <%- include('partials/footer') %>
+    </body>
+    
+</html>
