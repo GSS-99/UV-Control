@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import express from "express";
 import bodyParser from "body-parser";
 import fs from "fs/promises";
@@ -33,7 +34,7 @@ if (process.env.FIREBASE_SERVICE_ACCOUNT) {
   try {
     serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
   } catch (err) {
-    console.error(" Failed to parse FIREBASE_SERVICE_ACCOUNT:", err);
+    console.error("❌ Failed to parse FIREBASE_SERVICE_ACCOUNT:", err);
     process.exit(1);
   }
 } else {
@@ -41,7 +42,7 @@ if (process.env.FIREBASE_SERVICE_ACCOUNT) {
     const raw = await fs.readFile(path.join(__dirname, "serviceAccountKey.json"), "utf-8");
     serviceAccount = JSON.parse(raw);
   } catch (err) {
-    console.error("Missing Firebase config (env and file both failed).");
+    console.error("❌ Missing Firebase config (env and file both failed).");
     process.exit(1);
   }
 }
@@ -68,22 +69,10 @@ const verifyToken = async (req, res, next) => {
 };
 
 // Routes
-
-app.get('/info', (req, res) => {
-  res.render('info');
-});
-
-app.get('/about', (req, res) => {
-  res.render('about');
-});
-
-app.get('/shop', (req, res) => {
-  res.render('shop');
-});
-
-app.get("/", (req, res) => {
-  res.render("login");
-});
+app.get('/info', (req, res) => res.render('info'));
+app.get('/about', (req, res) => res.render('about'));
+app.get('/shop', (req, res) => res.render('shop'));
+app.get("/", (req, res) => res.render("login"));
 
 app.post("/verify-token", async (req, res) => {
   try {
@@ -91,7 +80,7 @@ app.post("/verify-token", async (req, res) => {
 
     res.cookie("token", req.body.idToken, {
       httpOnly: true,
-      secure: false, // Set to true if using HTTPS in production
+      secure: false, // Set to true in production with HTTPS
       sameSite: "Lax",
       maxAge: 60 * 60 * 1000,
     });
