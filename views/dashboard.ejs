@@ -40,29 +40,36 @@
     </section>
 
     <script type="module">
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-      import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-      const firebaseConfig = {
-        apiKey: "AIzaSyDw-cQW1UQp9Qom0R4nFnksx66xlghgTy8",
-        authDomain: "uv-control.firebaseapp.com",
-        projectId: "uv-control",
-        storageBucket: "uv-control.appspot.com",
-        messagingSenderId: "1066833623282",
-        appId: "1:1066833623282:web:b65c79cb811a9ace36386b",
-        measurementId: "G-NTKJD6LLN0"
-      };
-      // ✅ Initialize Firebase
-      const app = initializeApp(firebaseConfig);
-      const auth = getAuth(app);
-      // ✅ Logout button logic
-      document.getElementById("logout-btn").addEventListener("click", async () => {
-        await signOut(auth); // Firebase client logout
-        window.location.href = "/logout"; // Backend clears cookie and redirects to login
-      });
-    </script>
+  import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-    <!-- Geolocation Javascript-->
-    <script type="module" src="/js/uv-forecast.js"></script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyDw-cQW1UQp9Qom0R4nFnksx66xlghgTy8",
+    authDomain: "uv-control.firebaseapp.com",
+    projectId: "uv-control",
+    storageBucket: "uv-control.appspot.com",
+    messagingSenderId: "1066833623282",
+    appId: "1:1066833623282:web:b65c79cb811a9ace36386b",
+    measurementId: "G-NTKJD6LLN0"
+  };
+
+  // ✅ Initialize Firebase once only
+  const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
+  const auth = getAuth(app);
+
+  // ✅ Logout logic
+  const logoutBtn = document.getElementById("logout-btn");
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", async () => {
+      await signOut(auth);
+      window.location.href = "/logout";
+    });
+  }
+</script>
+
+<!-- Geolocation + UV forecast logic -->
+<script type="module" src="/js/uv-forecast.js"></script>
+
     <%- include('partials/footer') %>
   </body>
 </html>

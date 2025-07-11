@@ -27,8 +27,24 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 // Firebase Admin SDK
-const serviceAccountRaw = await fs.readFile(path.join(__dirname, "serviceAccountKey.json"), "utf-8");
-const serviceAccount = JSON.parse(serviceAccountRaw);
+let serviceAccount;
+
+if (process.env.FIREBASE_SERVICE_ACCOUNT) {
+  try {
+    serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
+  } catch (err) {
+    console.error(" Failed to parse FIREBASE_SERVICE_ACCOUNT:", err);
+    process.exit(1);
+  }
+} else {
+  try {
+    const raw = await fs.readFile(path.join(__dirname, "serviceAccountKey.json"), "utf-8");
+    serviceAccount = JSON.parse(raw);
+  } catch (err) {
+    console.error("Missing Firebase config (env and file both failed).");
+    process.exit(1);
+  }
+}
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
@@ -65,12 +81,10 @@ app.get('/shop', (req, res) => {
   res.render('shop');
 });
 
-// Public login page
 app.get("/", (req, res) => {
   res.render("login");
 });
 
-// Handle Firebase token verification
 app.post("/verify-token", async (req, res) => {
   try {
     const decoded = await admin.auth().verifyIdToken(req.body.idToken);
@@ -89,20 +103,16 @@ app.post("/verify-token", async (req, res) => {
   }
 });
 
-// Protected dashboard
 app.get("/dashboard", verifyToken, (req, res) => {
-  res.render("dashboard", { user: req.user});
+  res.render("dashboard", { user: req.user });
 });
 
-// Logout route
 app.get("/logout", (req, res) => {
   res.clearCookie("token");
   res.redirect("/");
 });
 
 // Start server
-
 app.listen(PORT, '0.0.0.0', () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(`✅ UV Control running on port ${PORT}`);
 });
-
