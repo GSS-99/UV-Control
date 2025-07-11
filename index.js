@@ -61,6 +61,10 @@ app.get('/about', (req, res) => {
   res.render('about');
 });
 
+app.get('/shop', (req, res) => {
+  res.render('shop');
+});
+
 // Public login page
 app.get("/", (req, res) => {
   res.render("login");

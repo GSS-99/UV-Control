@@ -8,7 +8,7 @@
       <h1 class="dashboard-title gradient-text">Welcome, <%= user.name || user.email %></h1>
       <div class="scrollmenu">
         <a class="nav-link" href="/dashboard">Home</a>
-        <a class="nav-link" href="#shop-section">Shop</a>
+        <a class="nav-link" href="/shop">Shop</a>
         <a class="nav-link" href="/info">UV Facts</a>
         <a class="nav-link" href="/about">About</a>
         <button id="logout-btn">Logout</button>
@@ -84,6 +84,9 @@
         window.location.href = "/logout"; // Backend clears cookie and redirects to login
       });
     </script>
+
+    <!-- Geolocation Javascript-->
+    <script type="module" src="/js/uv-forecast.js"></script>
     <%- include('partials/footer') %>
   </body>
 </html>
