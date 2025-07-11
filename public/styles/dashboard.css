@@ -4,7 +4,7 @@
   max-width: auto;
   margin: 1rem;
   padding: 1rem;
-  --bs-body-color: black;
+  --bs-body-color: #555;
   --bs-body-bg: rgb(255, 255, 255, 0.4);
   background: linear-gradient(-45deg, #9B7EBD, #FEEBF6, #A2AADB, #F49BAB);
   background-size: 400% 400%;

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
     <%- include('partials/head') %>
-    <body>
+    <body class="dashboard-content">
         <header class="dashboard-header">
       <div class="scrollmenu">
         <a class="nav-link" href="/dashboard">Home</a>
@@ -11,40 +11,39 @@
       </div>
     </header>
     <main class="dashboard-section">
-      <h1 class="section-title">Scientific Information</h1>
+      <h1 class="section-title gradient-text">Scientific Information</h1>
       <section class="info-section">
 
-        <h2>☀️ What Is UV Radiation?</h2>
+        <h2>What Is UV Radiation?</h2>
         <p>
           Ultraviolet (UV) radiation is a type of electromagnetic energy emitted by the sun. It is invisible to the human eye but can have significant effects on health, particularly the skin and eyes. The Earth receives three types of UV radiation: UVA, UVB, and UVC. Only UVA and a portion of UVB reach the Earth's surface — UVC is absorbed by the atmosphere.
         </p>
 
-        <h2>🔍 The UV Index Explained</h2>
+        <h2>The UV Index Explained</h2>
         <p>
           The UV Index is a standardized measurement of the strength of sunburn-producing UV radiation at a particular place and time. It ranges from 0 (low) to 11+ (extreme), helping people plan safe outdoor activities and avoid excessive sun exposure.
         </p>
 
-        <ul class="uv-scale">
-          <li><span class="badge risk-low">0–2: Low</span> – Minimal risk. Protection needed only for very sensitive skin.</li>
-          <li><span class="badge risk-medium">3–5: Moderate</span> – Wear sunglasses and SPF 30+ sunscreen.</li>
-          <li><span class="badge risk-high">6–7: High</span> – Reduce time in the sun, seek shade.</li>
-          <li><span class="badge risk-very-high">8–10: Very High</span> – Extra protection required; avoid being outdoors during midday.</li>
-          <li><span class="badge risk-extreme">11+: Extreme</span> – Avoid sun exposure completely if possible.</li>
-        </ul>
+        <div class="day">
+          <p><span class="badge risk-low">0–2: Low</span> Minimal risk. Protection needed only for very sensitive skin.</p>
+          <p><span class="badge risk-medium">3–5: Moderate</span> Wear sunglasses and SPF 30+ sunscreen.</p>
+          <p><span class="badge risk-high">6–7: High</span> Reduce time in the sun, seek shade.</p>
+          <p><span class="badge risk-very-high">8–10: Very High</span> Extra protection required; avoid being outdoors during midday.</p>
+          <p><span class="badge risk-extreme">11+: Extreme</span> Avoid sun exposure completely if possible.</p>
+        </div>
 
-        <h2>🧴 Why Protection Matters</h2>
+        <h2>Why Protection Matters</h2>
         <p>
           Prolonged exposure to UV radiation increases the risk of sunburn, skin aging, eye damage (like cataracts), and skin cancer. Children and individuals with lighter skin tones are especially vulnerable. Even on cloudy days, up to 80% of UV rays can pass through clouds.
         </p>
 
-        <h2>📚 Sources & References</h2>
-        <ul>
-          <li>World Health Organization (WHO)</li>
-          <li>NASA Earth Observatory</li>
-          <li>Environmental Protection Agency (EPA)</li>
-          <li>European Centre for Disease Prevention and Control (ECDC)</li>
-        </ul>
-
+        <h2>Sources & References</h2>
+        <div>
+            <p><a class="links" href="https://www.who.int/uv" target="_blank" rel="noopener noreferrer">World Health Organization (WHO) – UV Radiation</a></p>
+            <p><a class="links" href="https://earthobservatory.nasa.gov/features/UVB" target="_blank" rel="noopener noreferrer">NASA Earth Observatory – UVB: The Ultraviolet Threat</a></p>
+            <p><a class="links" href="https://www.epa.gov/sunsafety" target="_blank" rel="noopener noreferrer">Environmental Protection Agency (EPA) – Sun Safety</a></p>
+            <p><a class="links" href="https://www.ecdc.europa.eu/en/climate-change/health-impacts/ultraviolet-radiation" target="_blank" rel="noopener noreferrer">European Centre for Disease Prevention and Control (ECDC) – UV Radiation & Health</a></p>
+        </div>
       </section>
     </main>
     <%- include('partials/footer') %>

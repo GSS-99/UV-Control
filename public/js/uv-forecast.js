@@ -44,10 +44,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- If location is cached, skip modal and load forecast ---
   if (cachedLocation) {
-    const { latitude, longitude } = JSON.parse(cachedLocation);
-    manualLocationBtn.style.display = 'inline-block';
-    loadMapAndForecast(latitude, longitude);
-  } else {
+  const { latitude, longitude } = JSON.parse(cachedLocation);
+  manualLocationBtn.style.display = 'none'; // hide if location already known
+  loadMapAndForecast(latitude, longitude);
+}
+ else {
     document.body.appendChild(modal);
   }
 
